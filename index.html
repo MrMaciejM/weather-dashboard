@@ -19,7 +19,7 @@
   </head>
   <body>
     <header
-      class="container-fluid text-center text-white bg-dark p-2 weather-header"
+      class="container-fluid text-center text-white bg-primary p-2 weather-header"
     >
       <h1>Weather Dashboard</h1>
     </header>
@@ -27,13 +27,16 @@
     <!-- max-width for ultra wide resolutions -->
     <div class="container-fluid" style="max-width: 1400px">
       <div class="row">
-        <aside class="col-lg-3 pb-3">
+        <!-- <aside class="col-lg-2 pb-3"> -->
+        <aside class="col-lg-1 pb-3">
           <h2 id="form-heading" class="mt-1 h3 form-label">
             Search for a City:
           </h2>
+
           <form id="search-form" class="form">
             <div class="form-inline form-group">
               <div class="input-group">
+                <!-- input field (London) -->
                 <input
                   class="form-input weather-search"
                   type="text"
@@ -43,9 +46,10 @@
                   aria-controls="today forecast"
                 />
                 <div class="input-group-append">
+                  <!-- Search btn -->
                   <button
                     type="submit"
-                    class="btn search-button"
+                    class="bg-primary text-white btn search-button"
                     id="search-button"
                     aria-label="submit search"
                   >
@@ -53,12 +57,20 @@
                   </button>
                   <hr class="hr weather-hr" />
                 </div>
+
+                <div class="locationList w-100 text-center">
+                  <p>London</p>
+                  <p>Paris</p>
+                  <p>Atlanta</p>
+                </div>
               </div>
             </div>
           </form>
+
           <div class="list-group" id="history"></div>
         </aside>
 
+        <!-- CURRENT WEATHER BOX -->
         <div class="col-lg-9 pb-3">
           <section
             id="today"
@@ -78,8 +90,11 @@
 
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- JS -->
     <script src="js/script.js"></script>
   </body>
 </html>
