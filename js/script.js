@@ -27,18 +27,31 @@ function getInput() {
     getCurrentCast(searchInput.value)
      .then(function (city) {
         //console.log(city); // display all objects 
-
-        // display location name
         // <h4 id="currentHeader">London (14/09/2022) .png</h4>
-        var cityName = city.name; 
+        var cityName = city.name;
+        var temp = city.main.temp; 
+        var wind = city.wind.speed;
+        var humidity = city.main.humidity; 
         var currentTime =  moment().format("DD/MM/YYYY");
-        var currentIcon = city.weather[0].icon + ".png";
-        // icon had its own img URL?? 
- 
-        // need to set img tag with jQuery 
-        $("#today").prepend(`<h4>${cityName} (${currentTime}) ${iconURL + city.weather[0].icon}.png </h4>`);
+        var currentIcon = iconURL + city.weather[0].icon + ".png";
+        // convert m/s to KPH
+        var windConverted = (wind * 3.6).toFixed(2); 
 
-        console.log(currentIcon)
+        // ALT + 0176 = ° (celsius)
+        // prettier-ignore
+        $("#today").html(`
+        <h4>
+        ${cityName} (${currentTime})
+        <img src="${currentIcon}"/>        
+        </h4>
+        <p>Temp: ${Math.round(temp)}°C</p>
+        <p>Wind: ${windConverted} km/h</p>
+        <p>Humidity: ${humidity}%</p>        
+        `)
+
+        //$("#today").prepend(`<h4>${cityName} (${currentTime}) <img src="${currentIcon}"/></h4>`);
+        // TO-DO: overwrite current city, to prevent stacking of h4 elements.
+        //console.log(currentIcon)
         console.log(city)
      })
   });
