@@ -52,7 +52,7 @@ function getInput() {
         //$("#today").prepend(`<h4>${cityName} (${currentTime}) <img src="${currentIcon}"/></h4>`);
         // TO-DO: overwrite current city, to prevent stacking of h4 elements.
         //console.log(currentIcon)
-        console.log(city)
+        console.log(currentIcon)
      })
   });
 }

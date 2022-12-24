@@ -55,3 +55,20 @@ button {
 #today p {
   margin-left: 0.2rem !important;
 }
+/* FORECAST */
+#forecast {
+  border: solid 1px green;
+  margin: 1.5rem 0% !important;
+}
+.wrapperForecast {
+  display: flex !important;
+  justify-self: space-between !important;
+}
+.forecastDays {
+  color: white;
+  background-color: rgb(75, 75, 75);
+  padding: 0 7px;
+  width: 13rem;
+  margin: 3rem 10%;
+  border-radius: 5px;
+}
