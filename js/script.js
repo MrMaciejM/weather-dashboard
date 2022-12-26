@@ -31,7 +31,7 @@ function getInput() {
         var humidity = city.main.humidity; 
         var currentTime =  moment().format("DD/MM/YYYY");
         var currentIcon = iconURL + city.weather[0].icon + ".png";
-        // convert m/s to km/h
+        // convert m/s to km/h *NOTE: OBSOLETE, NO LONGER USED.
         var windConverted = (wind * 3.6).toFixed(2);
         var lat = city.coord.lat;
         var lon = city.coord.lon;
@@ -45,10 +45,10 @@ function getInput() {
         <img src="${currentIcon}"/>        
         </h4>
         <p>Temp: ${Math.round(temp)}°C</p>
-        <p>Wind: ${windConverted} km/h</p>
+        <p>Wind: ${wind} KPH</p>
         <p>Humidity: ${humidity}%</p>        
         `)
-
+        // <p>Wind: ${windConverted} km/h</p>
         // 5-Day forecast - date, icon, temp, wind, humidity
         //date: list.dt_txt "2022-12-25 00:00:00"
         //icon: list.weather.[].icon
@@ -58,28 +58,40 @@ function getInput() {
         // prettier-ignore
         $.get(forecastURL + `lat=${lat}&lon=${lon}`)  
           .then(function (data) {
+              // 12pm unix epoch timestamp = 1672056000
+            counter = 0; // will be used to select days
+            pmTime = "12:00:00"; 
 
-            for(var i = 0; i < 5; i++){
-              // 12pm unix epoch timestamp = 1672052400
+            for(var i = 0; i < data.list.length; i++){
               var forecastDate = data.list[i].dt_txt.slice(0, 10);
+              var forecastHour = data.list[i].dt_txt.slice(11, 19); // 15:00:00 (15 is just example)
+              var forecastIcon = data.list[i].weather[0].icon;
+              var forecastTemp = data.list[i].main.temp;
+              // (wind * 3.6).toFixed(2)
+              var forecastWind = (data.list[i].wind.speed * 3.6).toFixed(0); 
 
+              console.log("forecast hour: "); 
+              console.log(forecastHour);  
               // if cnt/time greater than one date timestamp
+
+              if(forecastHour == pmTime) {    
+
               $(".wrapperForecast").append(
                 `
                 <div class="forecastDays">
                     <p>${forecastDate}</p>
                     <img
-                    src="https://openweathermap.org/img/w/03d.png"
+                    src="https://openweathermap.org/img/w/${forecastIcon}.png"
                     alt="test"
                     />
-                    <p>Temp: 13.63 oC</p>
-                    <p>Wind: 1.7 KPH</p>
+                    <p>Temp: ${Math.round(forecastTemp)} °C</p>
+                    <p>Wind: ${forecastWind} km/h</p>
                     <p>Humidity: 84%</p>
                 </div> 
-                `
-              
-                
-              )
+                `                 
+                )
+              }
+                //counter += 1; 
             }
             console.log(data);
             //console.log(lat);
