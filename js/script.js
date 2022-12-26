@@ -32,7 +32,7 @@ function getInput() {
         var currentTime =  moment().format("DD/MM/YYYY");
         var currentIcon = iconURL + city.weather[0].icon + ".png";
         // convert m/s to km/h *NOTE: OBSOLETE, NO LONGER USED.
-        var windConverted = (wind * 3.6).toFixed(2);
+        // var windConverted = (wind * 3.6).toFixed(2);
         var lat = city.coord.lat;
         var lon = city.coord.lon;
   
@@ -59,8 +59,8 @@ function getInput() {
         $.get(forecastURL + `lat=${lat}&lon=${lon}`)  
           .then(function (data) {
               // 12pm unix epoch timestamp = 1672056000
-            counter = 0; // will be used to select days
             pmTime = "12:00:00"; 
+            cleanForecast(); // stops stacking of forecast cards
 
             for(var i = 0; i < data.list.length; i++){
               var forecastDate = data.list[i].dt_txt.slice(0, 10);
@@ -69,50 +69,35 @@ function getInput() {
               var forecastTemp = data.list[i].main.temp;
               // (wind * 3.6).toFixed(2)
               var forecastWind = (data.list[i].wind.speed).toFixed(2); 
+              var forecastHumidity = data.list[i].main.humidity;
 
-              console.log("forecast hour: "); 
-              console.log(forecastHour);  
-              // if cnt/time greater than one date timestamp
-
-              if(forecastHour == pmTime) {    
-
-              $(".wrapperForecast").append(
-                `
-                <div class="forecastDays">
-                    <p>${forecastDate}</p>
-                    <img
-                    src="https://openweathermap.org/img/w/${forecastIcon}.png"
-                    alt="test"
-                    />
-                    <p>Temp: ${Math.round(forecastTemp)} °C</p>
-                    <p>Wind: ${forecastWind} KPH</p>
-                    <p>Humidity: 84%</p>
-                </div> 
-                `                 
-                )
-              }
-                //counter += 1; 
+              if(forecastHour == pmTime) {
+                $(".wrapperForecast").append(
+                 `
+                 <div class="forecastDays">
+                     <p>${forecastDate}</p>
+                     <img
+                     src="https://openweathermap.org/img/w/${forecastIcon}.png"
+                     alt="test"
+                     />
+                     <p>Temp: ${Math.round(forecastTemp)} °C</p>
+                     <p>Wind: ${forecastWind} KPH</p>
+                     <p>Humidity: ${forecastHumidity}%</p>
+                 </div> 
+                 `                 
+                 )
+              }                
             }
-            console.log(data);
-            //console.log(lat);
-            //console.log(lon);
-          })      
-        
+            console.log(data);            
+          })            
      })
   });
 }
 getInput();
 
-// display current weather on main dashboard
+//clean forecast cards to prevent duplicates stacking up
+function cleanForecast() {
+  $(".wrapperForecast").empty();
+}
 
-// get city, current date and icon
-
-//getInput();
-// ***************************
-/*
-$.get(currentURL + `q=${cityName}`)
-   .then(function (currentData) {
-    // shows current weather
-    console.log(
-        currentData         
-    ) // currentData . coord: {lon: -0.1257, lat: 51.5085} */
+// display previously typed cities
