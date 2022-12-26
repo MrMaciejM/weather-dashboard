@@ -68,7 +68,7 @@ function getInput() {
               var forecastIcon = data.list[i].weather[0].icon;
               var forecastTemp = data.list[i].main.temp;
               // (wind * 3.6).toFixed(2)
-              var forecastWind = (data.list[i].wind.speed * 3.6).toFixed(0); 
+              var forecastWind = (data.list[i].wind.speed).toFixed(2); 
 
               console.log("forecast hour: "); 
               console.log(forecastHour);  
@@ -85,7 +85,7 @@ function getInput() {
                     alt="test"
                     />
                     <p>Temp: ${Math.round(forecastTemp)} °C</p>
-                    <p>Wind: ${forecastWind} km/h</p>
+                    <p>Wind: ${forecastWind} KPH</p>
                     <p>Humidity: 84%</p>
                 </div> 
                 `                 
