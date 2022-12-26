@@ -62,13 +62,15 @@ button {
 }
 .wrapperForecast {
   display: flex !important;
-  justify-self: space-between !important;
+  justify-content: space-around !important;
+  width: 100%;
+  /* margin: 0 0.5rem; */
 }
 .forecastDays {
   color: white;
   background-color: rgb(75, 75, 75);
   padding: 0 7px;
-  width: 13rem;
-  margin: 3rem 10%;
+  width: 100%;
+  margin: 3rem 0.5rem;
   border-radius: 5px;
 }
