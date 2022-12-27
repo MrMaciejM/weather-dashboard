@@ -8,12 +8,18 @@ var searchInput = document.getElementById("search-input");
 var searchBtn = document.getElementById("search-button");
 var searchForm = document.getElementById("search-form");
 var citiesList = document.getElementById("locationList");
+var array = [];
+var getLocalStorage = JSON.parse(localStorage.getItem("cities"));
+if (getLocalStorage == null || getLocalStorage.length == 0) {
+  localStorage.setItem("cities", JSON.stringify(array));
+}
 
 var apiKey = "7790a821eef7813b147ba03c132c329b";
 var baseURL = "https://api.openweathermap.org/data/2.5/";
 var currentURL = baseURL + `weather?appid=${apiKey}&units=metric&`;
 var forecastURL = baseURL + `forecast?appid=${apiKey}&units=metric&`;
 var iconURL = "https://openweathermap.org/img/w/";
+
 // get city coordinates
 function getCurrentCast(cityName) {
   // prettier-ignore
@@ -49,13 +55,9 @@ function getInput() {
         <p>Wind: ${wind} KPH</p>
         <p>Humidity: ${humidity}%</p>        
         `)
-        // <p>Wind: ${windConverted} km/h</p>
+
+        // *****************
         // 5-Day forecast - date, icon, temp, wind, humidity
-        //date: list.dt_txt "2022-12-25 00:00:00"
-        //icon: list.weather.[].icon
-        //temp: list.main.temp
-        //wind: list.wind.speed
-        //humidity: list.main.humidity
         // prettier-ignore
         $.get(forecastURL + `lat=${lat}&lon=${lon}`)  
           .then(function (data) {
@@ -89,9 +91,27 @@ function getInput() {
                  )
               }                
             }
-            console.log(data);            
+            //console.log(data);            
           })            
      })
+    // save input to localStorage
+    var searchValue = searchInput.value;
+    var array2 = JSON.parse(localStorage.getItem("cities"));
+
+    if (array2.length == 0) {
+      array2.push(searchValue);
+      localStorage.setItem("cities", JSON.stringify(array2));
+    }
+
+    for (var j = 0; j < array2.length; j++) {
+      var getStorage = JSON.parse(localStorage.getItem("cities"));
+      var array2 = getStorage;
+
+      if (!array2.includes(searchValue)) {
+        array2.push(searchValue);
+        localStorage.setItem("cities", JSON.stringify(array2));
+      }
+    }
   });
 }
 getInput();
@@ -101,44 +121,21 @@ function cleanForecast() {
   $(".wrapperForecast").empty();
 }
 
-// display previously typed cities (localStorage)
-// set = stringify
-// get = parse
-
-// TO-DO:
-// - display things from localStorage
-// - add event listeners to each displayed item
-// - make displayed item fill inputValue
-// -
-// <p>Madrid</p>
-var array = [
-  {
-    cities: ["Madrid", "London"],
-  },
-];
-var setStorage = localStorage.setItem("cities", JSON.stringify(array));
-var getStorage = JSON.parse(localStorage.getItem("cities"));
-
+// display saved cities
 function displayCities() {
-  //
-  for (var i = 0; i <= array.length; i++) {
-    // prettier-ignore
-    $(".locationList").append(
-      `<p>${getStorage[0].cities[i]}</p>`
-    )
-    //console.log(getStorage[0].cities[i]);
-  }
+  var getStorage = JSON.parse(localStorage.getItem("cities"));
 
+  if (getStorage.cities != 0) {
+    for (var i = 0; i < getStorage.length; i++) {
+      // prettier-ignore
+      $(".locationList").append(
+            `<p>${getStorage[i]}</p>`
+            )
+    }
+  }
   $(citiesList).on("click", function (event) {
-    //
     var savedCityName = event.target.textContent;
-    console.log(savedCityName);
+    searchInput.value = savedCityName;
   });
-  //
-  //
 }
 displayCities();
-
-// send displayed city into input
-
-//console.log(getStorage);
