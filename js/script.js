@@ -7,6 +7,7 @@
 var searchInput = document.getElementById("search-input");
 var searchBtn = document.getElementById("search-button");
 var searchForm = document.getElementById("search-form");
+var citiesList = document.getElementById("locationList");
 
 var apiKey = "7790a821eef7813b147ba03c132c329b";
 var baseURL = "https://api.openweathermap.org/data/2.5/";
@@ -100,4 +101,44 @@ function cleanForecast() {
   $(".wrapperForecast").empty();
 }
 
-// display previously typed cities
+// display previously typed cities (localStorage)
+// set = stringify
+// get = parse
+
+// TO-DO:
+// - display things from localStorage
+// - add event listeners to each displayed item
+// - make displayed item fill inputValue
+// -
+// <p>Madrid</p>
+var array = [
+  {
+    cities: ["Madrid", "London"],
+  },
+];
+var setStorage = localStorage.setItem("cities", JSON.stringify(array));
+var getStorage = JSON.parse(localStorage.getItem("cities"));
+
+function displayCities() {
+  //
+  for (var i = 0; i <= array.length; i++) {
+    // prettier-ignore
+    $(".locationList").append(
+      `<p>${getStorage[0].cities[i]}</p>`
+    )
+    //console.log(getStorage[0].cities[i]);
+  }
+
+  $(citiesList).on("click", function (event) {
+    //
+    var savedCityName = event.target.textContent;
+    console.log(savedCityName);
+  });
+  //
+  //
+}
+displayCities();
+
+// send displayed city into input
+
+//console.log(getStorage);
