@@ -1,12 +1,16 @@
 @media (max-width: 991px) {
+  .notify {
+    text-align: center;
+    margin: 0 auto;
+  }
   aside {
     display: flex !important;
     /* grid-template-columns: repeat(4, 1fr); */
     flex-direction: column !important;
     justify-content: center !important;
     align-content: center !important;
-    border: solid 3px yellow;
     text-align: center;
+    margin-top: 6rem !important;
   }
   form {
     display: flex !important;
