@@ -4,6 +4,14 @@
   padding: 0;
   box-sizing: border-box !important;
 }
+.notify {
+  display: inline-block !important;
+  position: absolute !important;
+  margin: 1rem 30% !important;
+}
+.hide {
+  display: none !important;
+}
 body {
   /* background-color: rgb(133, 133, 133) !important; */
   /* REMOVE AFTER TESTING */

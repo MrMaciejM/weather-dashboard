@@ -22,6 +22,13 @@ var currentURL = baseURL + `weather?appid=${apiKey}&units=metric&`;
 var forecastURL = baseURL + `forecast?appid=${apiKey}&units=metric&`;
 var iconURL = "https://openweathermap.org/img/w/";
 
+// display refresh notification
+function notifyRefresh() {
+  var notify = document.querySelector(".notify");
+  notify.setAttribute("class", "hide");
+}
+//notifyRefresh();
+
 // get city coordinates
 function getCurrentCast(cityName) {
   // prettier-ignore
@@ -31,6 +38,7 @@ function getCurrentCast(cityName) {
 function getInput() {
   searchForm.addEventListener("submit", function (event) {
     event.preventDefault();
+    notifyRefresh();
     // prettier-ignore
     getCurrentCast(searchInput.value)
      .then(function (city) {        
@@ -141,6 +149,7 @@ displayCities();
 // display weather upon clicking a saved city
 $(citiesList).on("click", function (event) {
   var savedCityName = event.target.textContent;
+  notifyRefresh();
 
   // show main dashboard
   // prettier-ignore
