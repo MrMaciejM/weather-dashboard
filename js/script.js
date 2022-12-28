@@ -1,3 +1,5 @@
+// weather app backup
+
 // NOTE: use jQuery
 
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
@@ -31,7 +33,8 @@ function getInput() {
     event.preventDefault();
     // prettier-ignore
     getCurrentCast(searchInput.value)
-     .then(function (city) {        
+     .then(function (city) {     
+        //console.log(city);   
         var cityName = city.name;
         var temp = city.main.temp; 
         var wind = city.wind.speed;
@@ -122,7 +125,7 @@ function cleanForecast() {
 }
 
 // display saved cities
-function displayCities() {
+function displayCities(savedCity) {
   var getStorage = JSON.parse(localStorage.getItem("cities"));
 
   if (getStorage.cities != 0) {
@@ -133,9 +136,76 @@ function displayCities() {
             )
     }
   }
-  $(citiesList).on("click", function (event) {
-    var savedCityName = event.target.textContent;
-    searchInput.value = savedCityName;
-  });
 }
 displayCities();
+
+// display weather upon clicking a saved city
+$(citiesList).on("click", function (event) {
+  var savedCityName = event.target.textContent;
+
+  // show main dashboard
+  // prettier-ignore
+  $.get(currentURL + `q=${savedCityName}`)
+    .then( function (city){
+        var cityName = city.name;
+        var temp = city.main.temp; 
+        var wind = city.wind.speed;
+        var humidity = city.main.humidity; 
+        var currentTime =  moment().format("DD/MM/YYYY");
+        var currentIcon = iconURL + city.weather[0].icon + ".png";
+        var lat = city.coord.lat;
+        var lon = city.coord.lon;
+  
+        // prettier-ignore
+        $("#today").html(`
+        <h4>
+        ${cityName} (${currentTime})
+        <img src="${currentIcon}"/>        
+        </h4>
+        <p>Temp: ${Math.round(temp)}°C</p>
+        <p>Wind: ${wind} KPH</p>
+        <p>Humidity: ${humidity}%</p>        
+        `)
+
+        // 5 day forecast
+        // prettier-ignore
+        $.get(forecastURL + `lat=${lat}&lon=${lon}`)  
+          .then(function (data) {
+              // 12pm unix epoch timestamp = 1672056000
+            pmTime = "12:00:00"; 
+            cleanForecast(); // stops stacking of forecast cards
+
+            for(var i = 0; i < data.list.length; i++){
+              var forecastDate = data.list[i].dt_txt.slice(0, 10);
+              var forecastHour = data.list[i].dt_txt.slice(11, 19); // 15:00:00 (15 is just example)
+              var forecastIcon = data.list[i].weather[0].icon;
+              var forecastTemp = data.list[i].main.temp;
+              // (wind * 3.6).toFixed(2)
+              var forecastWind = (data.list[i].wind.speed).toFixed(2); 
+              var forecastHumidity = data.list[i].main.humidity;
+
+              if(forecastHour == pmTime) {
+                $(".wrapperForecast").append(
+                 `
+                 <div class="forecastDays">
+                     <p>${forecastDate}</p>
+                     <img
+                     src="https://openweathermap.org/img/w/${forecastIcon}.png"
+                     alt="test"
+                     />
+                     <p>Temp: ${Math.round(forecastTemp)} °C</p>
+                     <p>Wind: ${forecastWind} KPH</p>
+                     <p>Humidity: ${forecastHumidity}%</p>
+                 </div> 
+                 `                 
+                 )
+              }                
+            }
+            //console.log(data);            
+          })  
+    });
+
+  //searchInput.value = savedCityName;
+  //return savedCityName;
+  //getCurrentCast(savedCityName);
+});
