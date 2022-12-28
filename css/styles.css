@@ -5,7 +5,7 @@
   box-sizing: border-box !important;
 }
 body {
-  background-color: rgb(133, 133, 133) !important;
+  /* background-color: rgb(133, 133, 133) !important; */
   /* REMOVE AFTER TESTING */
 }
 aside {
@@ -55,9 +55,10 @@ button {
 #today p {
   margin-left: 0.2rem !important;
 }
-/* FORECAST */
+
+/* FORECAST DASHBOARD */
 #forecast {
-  border: solid 1px green;
+  /* border: solid 1px green; */
   margin: 1.5rem 0% !important;
 }
 .wrapperForecast {
