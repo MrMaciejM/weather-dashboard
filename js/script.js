@@ -33,8 +33,7 @@ function getInput() {
     event.preventDefault();
     // prettier-ignore
     getCurrentCast(searchInput.value)
-     .then(function (city) {     
-        //console.log(city);   
+     .then(function (city) {        
         var cityName = city.name;
         var temp = city.main.temp; 
         var wind = city.wind.speed;
@@ -125,7 +124,7 @@ function cleanForecast() {
 }
 
 // display saved cities
-function displayCities(savedCity) {
+function displayCities() {
   var getStorage = JSON.parse(localStorage.getItem("cities"));
 
   if (getStorage.cities != 0) {
@@ -201,11 +200,6 @@ $(citiesList).on("click", function (event) {
                  )
               }                
             }
-            //console.log(data);            
           })  
     });
-
-  //searchInput.value = savedCityName;
-  //return savedCityName;
-  //getCurrentCast(savedCityName);
 });

@@ -1,0 +1,62 @@
+@media (max-width: 991px) {
+  aside {
+    display: flex !important;
+    /* grid-template-columns: repeat(4, 1fr); */
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-content: center !important;
+    border: solid 3px yellow;
+    text-align: center;
+  }
+  form {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .input-group {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-content: center !important;
+    margin: 0 auto !important;
+  }
+  #search-button {
+    display: flex !important;
+    margin-left: 6.1rem !important;
+  }
+}
+
+@media (max-width: 614px) {
+  .wrapperForecast {
+    /* display is set to flex */
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .forecastDays {
+    width: 30% !important;
+    margin: 1rem 0 !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .input-group {
+    margin: 0 25% !important;
+  }
+}
+@media (max-width: 535px) {
+  .input-group {
+    margin: 0 15% !important;
+  }
+  .forecastDays {
+    width: 50% !important;
+    margin: 1rem 0 !important;
+  }
+}
+@media (max-width: 357px) {
+  .input-group {
+    margin: 0 2% !important;
+  }
+  .forecastDays {
+    width: 80% !important;
+    margin: 1rem 0 !important;
+  }
+}
