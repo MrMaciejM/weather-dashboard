@@ -13,3 +13,9 @@ I have utilised my newly acquired skills of making API calls using jQuery and ge
 [!](/assets/weather-app.png)
 
 ## Links
+
+Deployed Site:
+https://mrmaciejm.github.io/weather-dashboard/
+
+Repository:
+https://github.com/MrMaciejM/weather-dashboard
