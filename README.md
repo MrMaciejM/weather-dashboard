@@ -10,7 +10,7 @@ I have utilised my newly acquired skills of making API calls using jQuery and ge
 
 ## Screenshot
 
-[!](assets/weather-app.png)
+![](/assets/weather-app.png)
 
 ## Links
 
